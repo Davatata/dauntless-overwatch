@@ -18,4 +18,11 @@ export class HttpServiceService {
       console.log(error);
     });
   }
+
+  getSearches() {
+    return localStorage.getItem("searches");
+  }
+  setSearches(searches) {
+    localStorage.setItem('searches', searches);
+  }
 }

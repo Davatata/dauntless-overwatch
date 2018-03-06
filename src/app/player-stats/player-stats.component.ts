@@ -20,6 +20,8 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   playerInfo = {};
   goodQuery = false;
   badQuery = false;
+  searches = [];
+  filteredList = [];
 
   pos = 0;
   players = [
@@ -33,28 +35,17 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private http: HttpServiceService) {
-    // this.http.getStats(this.data).then(data => {
-    //   console.table(data['us']['stats']['competitive']['overall_stats']);
-    //   this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
-    // });
   }
 
   ngOnInit() {
-    
+    let s = this.http.getSearches();
+    console.log(`s is ${s}`);
+    if (s === null) {
+      this.searches = [];
+    } else {
+      this.searches = s.split(',');
+    }
   }
-
-  // rotate the array on button click
-  // getData() {
-  //   let promise = this.http.getStats(this.players[this.pos]).then(data => {
-  //     this.data = this.players[this.pos];
-  //     this.pos++;
-  //     if (this.pos >= this.players.length) {
-  //       this.pos = 0;        
-  //     }
-  //     console.table(data['us']['stats']['competitive']['overall_stats']);
-  //     this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
-  //   });
-  // }
 
   // use input field to get data
   getData() {    
@@ -63,10 +54,13 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
         throw Error('Bad get');
       }
       this.battleTag = this.data;
-      // console.log(data['us']['stats']['competitive']);
+      this.addSearch(this.battleTag);      
+      console.log(this.searches);
+      this.http.setSearches(this.searches);
       this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
       this.goodQuery = true;
-      this.data = ''; 
+      this.data = '';
+      this.filteredList = [];
       this.badQuery = false;
     }).catch(error => {
       this.data = ''; 
@@ -76,7 +70,33 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  addSearch(battleTag) {
+    if(this.searches.indexOf(battleTag) === -1) {
+      this.searches.push(this.battleTag);
+    }    
+  }
+
+  onKey(event: any) {
+    if(event.keyCode === 13) {
+      this.getData();
+    } else {
+      if (this.data !== ""){
+        this.filteredList = this.searches.filter(el => {
+            return el.toLowerCase().includes(this.data.toLowerCase());   
+        });
+      } else{
+          this.filteredList = [];
+      }
+    }
+  }
+
+  select(item) {
+    console.log(`item: ${item}`);
+    this.data = item;
+  }
+
   ngOnDestroy() {
+    this.http.setSearches(this.searches);
   }
 
 }

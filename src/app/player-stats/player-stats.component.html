@@ -1,11 +1,22 @@
 <div class="container" style="margin-top: 30px;">
   <div class="row">
     <div class="col">
-      <input class="form-control" [(ngModel)]="data" type="search" autocomplete="on" (keyup.enter)="getData()" placeholder="Enter Battletag">
+      <input class="form-control" [(ngModel)]="data" type="search" autocomplete="on" (keyup)="onKey($event)" placeholder="Enter Battletag">
     </div>
     <div class="col">
       <button type="button" [disabled]="data === ''" class="btn btn-outline-success" (click)="getData()">Search</button>
     </div>
+  </div>
+  <div class="row" style="margin-top:15px;">
+    <div class="col" *ngIf="filteredList.length > 0">
+        <div class="suggestions">
+            <ul>
+                <li *ngFor="let item of filteredList"  >
+                    <a (click)="select(item)">{{item}}</a>
+                </li>
+            </ul>
+        </div>
+      </div>
   </div>
 </div>
 <hr>
