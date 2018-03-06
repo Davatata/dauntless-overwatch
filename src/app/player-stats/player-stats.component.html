@@ -1,0 +1,50 @@
+<div class="container" style="margin-top: 30px;">
+  <div class="row">
+    <div class="col">
+      <input class="form-control" [(ngModel)]="data" type="search" autocomplete="on" (keyup.enter)="getData()" placeholder="Enter Battletag">
+    </div>
+    <div class="col">
+      <button type="button" [disabled]="data === ''" class="btn btn-outline-success" (click)="getData()">Search</button>
+    </div>
+  </div>
+</div>
+<hr>
+
+<div *ngIf="goodQuery" class="container">
+  <div class="row">
+      <div class="col-3" style="padding:0;">
+        <img src="{{playerInfo.avatar}}" alt="-" 
+             style="width:100px; height:100px;"
+             onError="this.src='../../assets/logo.png';"></div>
+      <div class="col">
+        <h4>{{battleTag}}</h4>
+        <h4>Level: {{(playerInfo.prestige * 100) + playerInfo.level}}</h4>
+      </div>
+  </div>
+  <div class="row" style="background-color:black; text-align:center; color:white;">
+    <div class="col">
+      <p style="padding: 2px 0;">
+        <img src="{{playerInfo.tier_image}}" alt="-" 
+            style="width:50px; height:50px;"
+            onError="this.src='../../assets/logo.png';">{{playerInfo.comprank}}</p>
+      <p>Skill Rating</p></div>
+    <div class="col">
+      <p style="padding: 15px 0;">{{playerInfo.wins}}-{{playerInfo.losses}}-{{playerInfo.ties}}</p>
+      <p>WIN/LOSS/TIE</p></div>
+    <div class="col">
+      <p 
+        style="padding: 15px 0;"
+        [style.color]="playerInfo.win_rate > 49.9 ?'lawngreen':'#ff6464'">{{playerInfo.win_rate}}%</p>
+      <p>Win Rate</p></div>
+  </div>
+</div>
+<div class="container" style="margin-top: 10%">
+  <div class="row">
+    <div *ngIf="badQuery" class=" col-md-6 offset-md-3 alert alert-danger alert-dismissible" role="alert">
+      Enter a valid Battletag. (Caps matter)
+      <button type="button" class="close" data-dismiss="alert" (click)="badQuery = false;" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
