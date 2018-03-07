@@ -11,7 +11,7 @@
     <div class="col-12 col-md-6" *ngIf="filteredList.length > 0">
         <div class="suggestions">
             <ul style="list-style: none; padding: 0;">
-              <a *ngFor="let item of filteredList" (click)="select(item)" >
+              <a *ngFor="let item of filteredList" (click)="select(item); filteredList = [];" >
                 <li style="padding: 5px 0 5px 10px; cursor: pointer;"
                     class="border" >{{item}}
                 </li>
