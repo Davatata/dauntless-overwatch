@@ -8,12 +8,14 @@
     </div>
   </div>
   <div class="row" style="margin-top:15px;">
-    <div class="col" *ngIf="filteredList.length > 0">
+    <div class="col-12 col-md-6" *ngIf="filteredList.length > 0">
         <div class="suggestions">
-            <ul>
-                <li *ngFor="let item of filteredList"  >
-                    <a (click)="select(item)">{{item}}</a>
+            <ul style="list-style: none; padding: 0;">
+              <a *ngFor="let item of filteredList" (click)="select(item)" >
+                <li style="padding: 5px 0 5px 10px; cursor: pointer;"
+                    class="border" >{{item}}
                 </li>
+              </a>
             </ul>
         </div>
       </div>

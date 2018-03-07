@@ -39,7 +39,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let s = this.http.getSearches();
-    console.log(`s is ${s}`);
+    // console.log(`s is ${s}`);
     if (s === null) {
       this.searches = [];
     } else {
@@ -53,6 +53,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       if(data === undefined) {
         throw Error('Bad get');
       }
+      this.filteredList = [];
       this.battleTag = this.data;
       this.addSearch(this.battleTag);      
       console.log(this.searches);
@@ -60,7 +61,6 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
       this.goodQuery = true;
       this.data = '';
-      this.filteredList = [];
       this.badQuery = false;
     }).catch(error => {
       this.data = ''; 
@@ -91,7 +91,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   select(item) {
-    console.log(`item: ${item}`);
+    // console.log(`item: ${item}`);
     this.data = item;
   }
 
