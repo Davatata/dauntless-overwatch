@@ -22,6 +22,8 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   badQuery = false;
   searches = [];
   filteredList = [];
+  compStats = {};
+  quickStats = {};
 
   pos = 0;
   players = [
@@ -59,6 +61,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       console.log(this.searches);
       this.http.setSearches(this.searches);
       this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
+      console.log(data['us']);
       this.goodQuery = true;
       this.data = '';
       this.badQuery = false;

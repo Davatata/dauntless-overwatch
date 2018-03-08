@@ -8,7 +8,7 @@ export class HttpServiceService {
   constructor(private http: HttpClient) { }
 
   apiUrl:string = "https://owapi.net/api/v3/u/";
-  dataType:string = "/stats";
+  dataType:string = "/blob";
 
   getStats(battleTag:string) {
     let tag = battleTag.split('#').join('-');
