@@ -8,3 +8,12 @@ li:hover {
   -o-transition: background-color 1s ease-out;
   transition: background-color 1s ease-out;
 }
+
+#suggestedTags {
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  width: 50vw;
+  z-index: 1000;
+  background-color: white;
+}

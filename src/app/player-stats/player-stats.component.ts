@@ -24,6 +24,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   filteredList = [];
   compStats = {};
   quickStats = {};
+  loading = false;
 
   pos = 0;
   players = [
@@ -50,7 +51,10 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   // use input field to get data
-  getData() {    
+  getData() {
+    this.loading = true;
+    this.goodQuery = false;
+    this.badQuery = false;
     let promise = this.http.getStats(this.data).then(data => {
       if(data === undefined) {
         throw Error('Bad get');
@@ -58,16 +62,16 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.filteredList = [];
       this.battleTag = this.data;
       this.addSearch(this.battleTag);      
-      console.log(this.searches);
+      // console.log(this.searches);
       this.http.setSearches(this.searches);
       this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
-      console.log(data['us']);
-      this.goodQuery = true;
+      // console.log(data['us']);
       this.data = '';
-      this.badQuery = false;
+      this.goodQuery = true;
+      this.loading = false;
     }).catch(error => {
       this.data = ''; 
-      this.goodQuery = false;
+      this.loading = false;
       this.badQuery = true;
       // console.error(error);
     });
