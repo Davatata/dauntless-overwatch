@@ -7,16 +7,13 @@ export class HttpServiceService {
 
   constructor(private http: HttpClient) { }
 
-  apiUrl:string = "https://owapi.net/api/v3/u/";
-  dataType:string = "/blob";
+  apiUrl:string = 'https://ow-api.com/v1/stats/pc/us/';
+  dataType:string = '/complete';
 
   getStats(battleTag:string) {
     let tag = battleTag.split('#').join('-');
-    console.log('getting: tag...');
-    return this.http.get(this.apiUrl + tag + this.dataType).toPromise()
-    .catch(error => {
-      console.log(error);
-    });
+    console.log(`getting: ${tag}`);
+    return this.http.get(this.apiUrl + tag + this.dataType).toPromise();
   }
 
   getSearches() {

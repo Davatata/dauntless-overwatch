@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Observable} from "rxjs/Observable";
 
-import { Subscription } from 'rxjs/Subscription';
 import { HttpServiceService } from '../http-service.service';
 
 @Component({
@@ -10,9 +8,6 @@ import { HttpServiceService } from '../http-service.service';
   styleUrls: ['./player-stats.component.css']
 })
 export class PlayerStatsComponent implements OnInit, OnDestroy {
-  playerData: Observable<any>;
-  subscription: Subscription;
-
   title = 'Dauntless Overwatch';
   data:string = '';
   temp:string = '';
@@ -25,6 +20,11 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   compStats = {};
   quickStats = {};
   loading = false;
+  overallInfo = {};
+  compActive = true;
+  compArray = [];
+  quickArray = [];
+  searching = false;
 
   pos = 0;
   players = [
@@ -37,8 +37,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     'metaphysics#11256'
   ];
 
-  constructor(private http: HttpServiceService) {
-  }
+  constructor(private http: HttpServiceService) {}
 
   ngOnInit() {
     let s = this.http.getSearches();
@@ -52,28 +51,31 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
 
   // use input field to get data
   getData() {
+    this.searching = true;
+    this.temp = this.data;
+    this.data = '';
     this.loading = true;
     this.goodQuery = false;
     this.badQuery = false;
-    let promise = this.http.getStats(this.data).then(data => {
-      if(data === undefined) {
+    let promise = this.http.getStats(this.temp).then(data => {
+      if(data === undefined || data['error']) {
         throw Error('Bad get');
       }
       this.filteredList = [];
-      this.battleTag = this.data;
+      this.battleTag = this.temp;
       this.addSearch(this.battleTag);      
-      // console.log(this.searches);
       this.http.setSearches(this.searches);
-      this.playerInfo = data['us']['stats']['competitive']['overall_stats'];
-      // console.log(data['us']);
-      this.data = '';
+      this.playerInfo = this.getOverallInfo(data);
       this.goodQuery = true;
       this.loading = false;
+      this.compActive = true;
+      this.searching = false;
     }).catch(error => {
-      this.data = ''; 
+      this.filteredList = [];
+      this.temp = ''; 
       this.loading = false;
       this.badQuery = true;
-      // console.error(error);
+      this.searching = false;
     });
   }
 
@@ -83,6 +85,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     }    
   }
 
+  // submit query when entered pressed from input
   onKey(event: any) {
     if(event.keyCode === 13) {
       this.getData();
@@ -98,8 +101,41 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   select(item) {
-    // console.log(`item: ${item}`);
     this.data = item;
+  }
+
+  toggleMode() {
+    this.compActive = (this.compActive === true ? false : true);
+  }
+
+  getOverallInfo(data) {
+    let compStats = data.competitiveStats.careerStats.allHeroes;
+    let played = compStats.game.gamesPlayed
+    let wins = compStats.game.gamesWon;
+    let ties = compStats.game.gamesTied === undefined ? 0 : compStats.game.gamesTied;
+    let lost = played - wins;
+
+    if (ties !== undefined) {
+      lost -= ties;
+    } else {
+      ties = 0;
+    }
+
+    const info = {
+      icon: data.icon,
+      level : (data.prestige * 100) + data.level,
+      competitive: data.competitiveStats,
+      quickplay: data.quickPlayStats,
+      compGames: {
+        wins : wins,
+        losses : lost,
+        ties : ties,
+        winRate: ((wins / (played - ties)) * 100).toFixed(2)
+      },
+      rating: data.rating,
+      ratingIcon: data.ratingIcon
+    };
+    return info;
   }
 
   ngOnDestroy() {

@@ -13,8 +13,6 @@
     </div>
   </div>
   <br>
-  <!-- <div class="row justify-content-center">
-  </div> -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-6" *ngIf="filteredList.length > 0">
         <div class="suggestions">
@@ -29,35 +27,72 @@
       </div>
   </div>
 </div>
+
 <hr>
 
 <div *ngIf="goodQuery" class="container">
   <div class="row justify-content-center">
       <div class="col-3" style="padding:0;">
-        <img src="{{playerInfo.avatar}}" alt="-" 
+        <img src="{{playerInfo.icon}}" alt="-" 
              style="width:100px; height:100px;"
              onError="this.src='../../assets/logo.png';"></div>
       <div class="col text-center">
-        <h4>{{battleTag}}</h4>
-        <h4>Level: {{(playerInfo.prestige * 100) + playerInfo.level}}</h4>
+        <h4>{{temp}}</h4>
+        <h4>Level: {{playerInfo.level}}</h4>
       </div>
   </div>
+
   <div class="row justify-content-center" style="background-color:black; text-align:center; color:white;">
     <div class="col">
       <p style="padding: 2px 0;">
-        <img src="{{playerInfo.tier_image}}" alt="-" 
+        <img src="{{playerInfo.ratingIcon}}" alt="-" 
             style="width:50px; height:50px;"
-            onError="this.src='../../assets/logo.png';">{{playerInfo.comprank}}</p>
+            onError="this.src='../../assets/logo.png';">{{playerInfo.rating}}</p>
       <p>Skill Rating</p></div>
     <div class="col">
-      <p style="padding: 15px 0;">{{playerInfo.wins}}-{{playerInfo.losses}}-{{playerInfo.ties}}</p>
+      <p style="padding: 15px 0;">{{playerInfo.compGames.wins}}-{{playerInfo.compGames.losses}}-{{playerInfo.compGames.ties}}</p>
       <p>WIN/LOSS/TIE</p></div>
     <div class="col">
       <p 
         style="padding: 15px 0;"
-        [style.color]="playerInfo.win_rate > 49.9 ?'lawngreen':'#ff6464'">{{playerInfo.win_rate}}%</p>
+        [style.color]="playerInfo.compGames.winRate > 49.9 ?'lawngreen':'#ff6464'">{{playerInfo.compGames.winRate}}%</p>
       <p>Win Rate</p></div>
   </div>
+
+  <div class="row text-right" style="margin-top: 10px;">
+    <div class="col">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-outline-secondary" [class.active]="!compActive" (click)="toggleMode()">
+          Quickplay
+        </label>
+        <label class="btn btn-outline-secondary" [class.active]="compActive" (click)="toggleMode()">
+          Competitive
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col">
+      <div *ngIf="compActive">
+        <div *ngFor="let item of compArray">
+          <div class="row">
+            <div class="col-8" style="overflow:hidden;">{{item}}</div>
+            <div class="col-4">{{overallInfo['competitive']['game_stats'][item]}}</div>
+          </div>
+        </div>
+      </div>  
+      <div *ngIf="!compActive">
+        <div *ngFor="let item of quickArray">
+          <div class="row">
+            <div class="col-8" style="overflow:hidden;">{{item}}</div>
+            <div class="col-4">{{overallInfo['quickplay']['game_stats'][item]}}</div>
+          </div>
+        </div>
+      </div>  
+      
+    </div>
+  </div> -->
 </div>
 
 <div *ngIf="badQuery" class=" col-md-6 offset-md-3 alert alert-danger alert-dismissible" role="alert">
@@ -74,3 +109,4 @@
     </div>
   </div>
 </div>
+
