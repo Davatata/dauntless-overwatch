@@ -25,6 +25,9 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   compArray = [];
   quickArray = [];
   searching = false;
+  currentMode = 'competitive';
+
+  objectkeys = Object.keys;
 
   pos = 0;
   players = [
@@ -105,21 +108,22 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   toggleMode() {
-    this.compActive = (this.compActive === true ? false : true);
+    if (this.compActive === true) {
+      this.compActive = false;
+      this.currentMode = 'quickPlay';
+    } else {
+      this.compActive = true;
+      this.currentMode = 'competitive';
+    }
   }
 
   getOverallInfo(data) {
+    // console.log(data);
     let compStats = data.competitiveStats.careerStats.allHeroes;
-    let played = compStats.game.gamesPlayed
-    let wins = compStats.game.gamesWon;
-    let ties = compStats.game.gamesTied === undefined ? 0 : compStats.game.gamesTied;
-    let lost = played - wins;
-
-    if (ties !== undefined) {
-      lost -= ties;
-    } else {
-      ties = 0;
-    }
+    let played = compStats.game.gamesPlayed === undefined ? 0 : compStats.game.gamesPlayed;
+    let wins =   compStats.game.gamesWon    === undefined ? 0 : compStats.game.gamesWon;
+    let ties =   compStats.game.gamesTied   === undefined ? 0 : compStats.game.gamesTied;
+    let lost =   played - wins - ties;
 
     const info = {
       icon: data.icon,
@@ -130,7 +134,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
         wins : wins,
         losses : lost,
         ties : ties,
-        winRate: ((wins / (played - ties)) * 100).toFixed(2)
+        winRate: ((wins / (played - ties)) * 100).toFixed(1)
       },
       rating: data.rating,
       ratingIcon: data.ratingIcon
