@@ -4,17 +4,28 @@
       <h2><em>Dauntless Overwatch</em></h2>
     </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-8 col-md-6">
-      <input class="form-control" pattern="([a-zA-Z]{1,10}#[0-9]{1,10})\w+" [(ngModel)]="data" type="search" autocomplete="on" (keyup)="onKey($event)" placeholder="Enter Battletag">
+  <form #myform="ngForm">
+    <div class="row justify-content-center">
+      <div class="col-8 col-md-6">
+        <input class="form-control" 
+               pattern="([a-zA-ZÀ-ÿ]{1}[0-9a-zA-ZÀ-ÿ]{2,12}#[0-9]{1,10})\w+" 
+               [(ngModel)]="data" 
+               type="search" 
+               autocomplete="on" 
+               (keyup)="onKey($event, myform)" 
+               placeholder="Enter Battletag"
+               name="battletag">
+      </div>
+      <div class="col-4 col-md-2">
+        <button type="button" 
+                [disabled]="data === '' || !myform.form.valid" 
+                class="btn btn-outline-success" 
+                (click)="getData()">Search</button>
+      </div>
     </div>
-    <div class="col-4 col-md-2">
-      <button type="button" [disabled]="data === ''" class="btn btn-outline-success w-100" (click)="getData()">Search</button>
-    </div>
-  </div>
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-6" *ngIf="filteredList.length > 0">
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-6 col-md-4" *ngIf="filteredList.length > 0">
         <div class="suggestions">
             <ul id="suggestedTags">
               <a *ngFor="let item of filteredList" (click)="select(item); filteredList = [];" >
@@ -25,7 +36,9 @@
             </ul>
         </div>
       </div>
-  </div>
+      <div class="col-6 col-md-4"></div>
+    </div>
+  </form>
 </div>
 
 <hr>

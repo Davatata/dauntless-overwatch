@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { HttpServiceService } from '../http-service.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-player-stats',
@@ -18,12 +19,9 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   searches = [];
   filteredList = [];
   compStats = {};
-  quickStats = {};
   loading = false;
   overallInfo = {};
   compActive = true;
-  compArray = [];
-  quickArray = [];
   searching = false;
   currentMode = 'competitive';
 
@@ -89,8 +87,8 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   // submit query when entered pressed from input
-  onKey(event: any) {
-    if(event.keyCode === 13) {
+  onKey(event: any, form: NgForm) {
+    if(event.keyCode === 13 && form.form.valid) {
       this.getData();
     } else {
       if (this.data !== ""){
