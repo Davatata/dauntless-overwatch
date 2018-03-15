@@ -24,6 +24,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   compActive = true;
   searching = false;
   currentMode = 'competitive';
+  topHeroes:Object[] = [];
 
   objectkeys = Object.keys;
 
@@ -43,9 +44,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let s = this.http.getSearches();
     // console.log(`s is ${s}`);
-    if (s === null) {
-      this.searches = [];
-    } else {
+    if (s !== null) {
       this.searches = s.split(',');
     }
   }
@@ -66,7 +65,11 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.battleTag = this.temp;
       this.addSearch(this.battleTag);      
       this.http.setSearches(this.searches);
+      // console.log(data);
+      this.topHeroes = [];
       this.playerInfo = this.getOverallInfo(data);
+      this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
+      // console.table(this.topHeroes);
       this.goodQuery = true;
       this.loading = false;
       this.compActive = true;
@@ -108,10 +111,14 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   toggleMode() {
     if (this.compActive === true) {
       this.compActive = false;
-      this.currentMode = 'quickPlay';
+      this.currentMode = 'quickplay';
     } else {
       this.compActive = true;
       this.currentMode = 'competitive';
+    }
+    if (!this.topHeroes[this.currentMode]) {
+      this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
+      console.log(this.topHeroes);
     }
   }
 
@@ -138,6 +145,35 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       ratingIcon: data.ratingIcon
     };
     return info;
+  }
+
+  getTopHeroes(playerInfo) {
+    let temp = playerInfo[this.currentMode]['topHeroes'];
+    let heroes = Object.keys(temp).map(key => {
+      let ar = temp[key];
+      ar.seconds = this.convertTime(ar.timePlayed);
+      ar.hero = key.toUpperCase();
+      return ar;
+    });
+    heroes.sort(function (a, b) {
+      return b.seconds - a.seconds;
+    });
+    return heroes;
+  }
+
+  convertTime(time:string) {
+    if (time === '--') {
+      return 0;
+    }
+
+    let arr:any = time.split(' ');
+    arr[0] = parseInt(arr[0]); // "2" => 2
+    if (arr[1].startsWith('second')) {
+      return arr[0];
+    } else {
+      let seconds = (arr[1].startsWith('minute') ? 60 : 3600);
+      return arr[0] * seconds;
+    }
   }
 
   ngOnDestroy() {
