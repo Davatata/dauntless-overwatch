@@ -57,6 +57,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.goodQuery = false;
     this.badQuery = false;
+    this.currentMode = 'competitive';
     let promise = this.http.getStats(this.temp).then(data => {
       if(data === undefined || data['error']) {
         throw Error('Bad get');
@@ -68,6 +69,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       // console.log(data);
       this.topHeroes = [];
       this.playerInfo = this.getOverallInfo(data);
+      console.log(this.playerInfo);
       this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
       // console.table(this.topHeroes);
       this.goodQuery = true;
@@ -106,6 +108,12 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
 
   select(item) {
     this.data = item;
+  }
+
+  hasTimePlayed(arr) {
+    return arr.filter(hero => {
+      return hero.timePlayed !== "--";
+    });
   }
 
   toggleMode() {

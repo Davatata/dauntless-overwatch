@@ -3,10 +3,11 @@ p {
 }
 li:hover {
   background-color: #f99e1a;
-  -webkit-transition: background-color 1s ease-out;
-  -moz-transition: background-color 1s ease-out;
-  -o-transition: background-color 1s ease-out;
-  transition: background-color 1s ease-out;
+  color: white;
+  -webkit-transition: background-color 1s ease-out, color 200ms ease-in;
+  -moz-transition: background-color 1s ease-out, color 200ms ease-in;
+  -o-transition: background-color 1s ease-out, color 200ms ease-in;
+  transition: background-color 1s ease-out, color 200ms ease-in;
 }
 
 #suggestedTags {
@@ -17,4 +18,9 @@ li:hover {
   z-index: 1000;
   background-color: white;
   margin-top: -25px;
+}
+
+.table td, .table th {
+  text-align: center !important;
+  vertical-align: middle !important;
 }
