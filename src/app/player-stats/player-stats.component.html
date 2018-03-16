@@ -98,7 +98,7 @@
               <th *ngIf="currentMode !== 'competitive'" >Played</th>
               <th *ngIf="currentMode === 'competitive'">Games</th>
             </tr>
-            <tr *ngFor="let hero of hasTimePlayed(topHeroes[currentMode] | slice:0:5)">
+            <tr *ngFor="let hero of hasTimePlayed(topHeroes[currentMode])">
               <th style="width: 50px;">
                 <img src='../../assets/{{hero.hero.toLowerCase()}}.png' 
                      alt="" style="height:70px;">
