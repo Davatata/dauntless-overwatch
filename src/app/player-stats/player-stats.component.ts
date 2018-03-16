@@ -69,7 +69,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       // console.log(data);
       this.topHeroes = [];
       this.playerInfo = this.getOverallInfo(data);
-      console.log(this.playerInfo);
+      // console.log(this.playerInfo);
       this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
       // console.table(this.topHeroes);
       this.goodQuery = true;
@@ -126,13 +126,13 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     }
     if (!this.topHeroes[this.currentMode]) {
       this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
-      console.log(this.topHeroes);
+      // console.log(this.topHeroes);
     }
   }
 
   getOverallInfo(data) {
-    // console.log(data);
-    let compStats = data.competitiveStats.careerStats.allHeroes;
+    let careerStats = data.competitiveStats.careerStats;
+    let compStats = careerStats.allHeroes;
     let played = compStats.game.gamesPlayed === undefined ? 0 : compStats.game.gamesPlayed;
     let wins =   compStats.game.gamesWon    === undefined ? 0 : compStats.game.gamesWon;
     let ties =   compStats.game.gamesTied   === undefined ? 0 : compStats.game.gamesTied;
@@ -150,17 +150,21 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
         winRate: ((wins / (played - ties)) * 100).toFixed(1)
       },
       rating: data.rating,
-      ratingIcon: data.ratingIcon
+      ratingIcon: data.ratingIcon,
+      careerStats: careerStats
     };
     return info;
   }
 
   getTopHeroes(playerInfo) {
     let temp = playerInfo[this.currentMode]['topHeroes'];
-    let heroes = Object.keys(temp).map(key => {
-      let ar = temp[key];
+    let heroes = Object.keys(temp).map(heroName => {
+      let ar = temp[heroName];
       ar.seconds = this.convertTime(ar.timePlayed);
-      ar.hero = key.toUpperCase();
+      ar.hero = heroName.toUpperCase();
+      if (playerInfo['careerStats'][heroName]) {
+        ar.games = this.getWTL(playerInfo['careerStats'][heroName]['game']);
+      }
       return ar;
     });
     heroes.sort(function (a, b) {
@@ -182,6 +186,16 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       let seconds = (arr[1].startsWith('minute') ? 60 : 3600);
       return arr[0] * seconds;
     }
+  }
+
+  getWTL(games:Object) {
+    let ties = games['gamesTied'] || 0;
+    let wins = games['gamesWon'] || 0;
+    let losses = games['gamesLost'] || 0;
+    if (ties) {
+      return `${wins}-${ties}-${losses}`; 
+    }
+    return `${wins}-${losses}`; 
   }
 
   ngOnDestroy() {

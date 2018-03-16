@@ -95,7 +95,8 @@
               <th>Accuracy</th>
               <th *ngIf="currentMode === 'competitive'" class="d-none d-sm-table-cell">Win%</th>
               <th *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">Wins</th>
-              <th>Played</th>
+              <th *ngIf="currentMode !== 'competitive'" >Played</th>
+              <th *ngIf="currentMode === 'competitive'">Games</th>
             </tr>
             <tr *ngFor="let hero of hasTimePlayed(topHeroes[currentMode] | slice:0:5)">
               <th style="width: 50px;">
@@ -106,7 +107,8 @@
               <td>{{hero.weaponAccuracy}}%</td>
               <td *ngIf="currentMode === 'competitive'" class="d-none d-sm-table-cell">{{hero.winPercentage}}%</td>
               <td *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">{{hero.gamesWon}}</td>
-              <td>{{hero.timePlayed}}</td>
+              <td *ngIf="currentMode !== 'competitive'" >{{hero.timePlayed}}</td>
+              <td *ngIf="currentMode === 'competitive'">{{hero.games}}</td>
             </tr>
           </tbody>
         </table>
