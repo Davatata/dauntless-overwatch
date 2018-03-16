@@ -193,7 +193,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     let wins = games['gamesWon'] || 0;
     let losses = games['gamesLost'] || 0;
     if (ties) {
-      return `${wins}-${ties}-${losses}`; 
+      return `${wins}-${losses}-${ties}`; 
     }
     return `${wins}-${losses}`; 
   }
