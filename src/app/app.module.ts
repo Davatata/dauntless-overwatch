@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HttpServiceService } from "./http-service.service";
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
+import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    PlayerStatsComponent
+    PlayerStatsComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,

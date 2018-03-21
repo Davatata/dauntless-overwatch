@@ -25,8 +25,9 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   searching = false;
   currentMode = 'competitive';
   topHeroes:Object[] = [];
-
-  objectkeys = Object.keys;
+  opacity = 0;
+  zIndex = 0;
+  visible = false;
 
   pos = 0;
   players = [
@@ -138,7 +139,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     let ties =   compStats.game.gamesTied   === undefined ? 0 : compStats.game.gamesTied;
     let lost =   played - wins - ties;
 
-    const info = {
+    return {
       icon: data.icon,
       level : (data.prestige * 100) + data.level,
       competitive: data.competitiveStats,
@@ -153,7 +154,6 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       ratingIcon: data.ratingIcon,
       careerStats: careerStats
     };
-    return info;
   }
 
   getTopHeroes(playerInfo) {
@@ -189,13 +189,35 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   getWTL(games:Object) {
+    let totalPlayed = games['gamesPlayed'] || 0;
     let ties = games['gamesTied'] || 0;
     let wins = games['gamesWon'] || 0;
-    let losses = games['gamesLost'] || 0;
+    let losses = totalPlayed - wins - ties;
     if (ties) {
       return `${wins}-${losses}-${ties}`; 
     }
     return `${wins}-${losses}`; 
+  }
+
+  toggleRanks() {
+    if (this.visible) {
+      this.visible = !this.visible;
+      // Remove listener to disable scroll
+      window.removeEventListener('scroll', this.noscroll);
+      this.opacity = 0;
+      this.zIndex = 0;
+    } else {
+      this.visible = !this.visible;
+      // add listener to disable scroll
+      window.addEventListener('scroll', this.noscroll);
+      this.opacity = 1;
+      this.zIndex = 1050;
+    }
+  }
+
+  // pulled from 'https://davidwells.io/snippets/disable-scrolling-with-javascript/'
+  noscroll() {
+    window.scrollTo( 0, 0 );
   }
 
   ngOnDestroy() {

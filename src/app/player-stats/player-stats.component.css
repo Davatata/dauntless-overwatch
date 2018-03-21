@@ -24,3 +24,10 @@ li:hover {
   text-align: center !important;
   vertical-align: middle !important;
 }
+
+.btn-outline-success {
+  color: white;
+  background-color: #28a745;
+  background-image: none;
+  border-color: #28a745;
+}
