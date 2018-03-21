@@ -45,14 +45,14 @@
 <hr>
 
 <div *ngIf="goodQuery" class="container" style="max-width:767px">
-  <div class="row justify-content-center">
+  <div class="row" style="background-color:black; color:white;">
       <div class="col-3" style="padding:0;">
         <img src="{{playerInfo.icon}}" alt="-" 
              style="width:100px; height:100px;"
              onError="this.src='../../assets/logo.png';"></div>
       <div class="col text-center">
-        <h4>{{temp}}</h4>
-        <h4>Level: {{playerInfo.level}}</h4>
+        <h5 style="padding-top:15px;">{{temp}}</h5>
+        <h5>Level: {{playerInfo.level}}</h5>
       </div>
   </div>
 
