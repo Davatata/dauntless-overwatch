@@ -11,16 +11,20 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-6 offset-md-3">
-      <ul style="list-style:none;">
-        <li><img src="../../assets/ranks/bronze.png" alt="Bronze"><span> Bronze - 1-1499 SR</span></li>
-        <li><img src="../../assets/ranks/silver.png" alt="Silver"><span> Silver - 1500-1999 SR</span></li>
-        <li><img src="../../assets/ranks/gold.png" alt="Gold"><span> Gold - 2000-2499 SR</span></li>
-        <li><img src="../../assets/ranks/platinum.png" alt="Platinum"><span> Platinum - 2500-2999 SR</span></li>
-        <li><img src="../../assets/ranks/diamond.png" alt="Diamond"><span> Diamond - 3000-3499 SR</span></li>
-        <li><img src="../../assets/ranks/master.png" alt="Master"><span> Master - 3500-3999 SR</span></li>
-        <li><img src="../../assets/ranks/grandmaster.png" alt="Grandmaster"><span> Grandmaster - 4000+</span></li>
-        <li><img src="../../assets/ranks/top500.png" alt="Top 500"><span> Top 500 - Among the 500 best players in that region</span></li>
-      </ul>
+      <table class="table table-striped text-center">
+        <tbody>
+          <tr>
+            <th>Icon</th>
+            <th>Name</th>
+            <th>Range</th>
+          </tr>
+          <tr *ngFor="let rank of ranks">
+            <td><img src="../../assets/ranks/{{rank.icon}}.png" alt="{{rank.name}}"></td>
+            <td><span>{{rank.name}}</span></td>
+            <td><span>{{rank.range}}</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
