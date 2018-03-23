@@ -9,7 +9,6 @@ import { HttpServiceService } from "./http-service.service";
 })
 export class AppComponent {
 
-
   constructor(private http: HttpServiceService) {}
 
 }

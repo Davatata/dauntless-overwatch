@@ -72,7 +72,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.playerInfo = this.getOverallInfo(data);
       // console.log(this.playerInfo);
       this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
-      // console.table(this.topHeroes);
+      //console.table(this.topHeroes);
       this.goodQuery = true;
       this.loading = false;
       this.compActive = true;

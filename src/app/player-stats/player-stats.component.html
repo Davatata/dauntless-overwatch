@@ -93,7 +93,7 @@
         </tr>
       </thead>
     </table>
-    <table class="table table-bordered table-dark">
+    <table class="table table-dark">
       <tbody>
         <tr>
           <th scope="row">
@@ -144,7 +144,8 @@
             <tr *ngFor="let hero of hasTimePlayed(topHeroes[currentMode])">
               <th style="width: 50px;">
                 <img src='../../assets/{{hero.hero.toLowerCase()}}.png' 
-                     alt="" style="height:70px;">
+                     alt="" style="height:70px;"
+                     onerror="this.src='../../assets/logo.png';">
               </th>
               <td>{{hero.eliminationsPerLife.toFixed(2)}}</td>
               <td>{{hero.weaponAccuracy}}%</td>

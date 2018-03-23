@@ -7,7 +7,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
 
-  // hide = true;
   @Input() opacity;
   @Input() zIndex;
   @Output() hide: EventEmitter<any> = new EventEmitter();
@@ -23,7 +22,6 @@ export class InfoComponent implements OnInit {
     { icon:'top500',      name:'Top 500',     range: 'Among the 500 best players in that region'}
   ];
 
-
   constructor() { }
 
   ngOnInit() {
@@ -33,6 +31,5 @@ export class InfoComponent implements OnInit {
     this.opacity = 0;
     this.zIndex = 0;
     this.hide.emit(null);
-    // console.log('hide ranks', false,this.opacity, this.zIndex);
   }
 }
