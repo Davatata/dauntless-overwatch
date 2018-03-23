@@ -12,10 +12,11 @@
                pattern="([a-zA-ZÀ-ÿ]{1}[0-9a-zA-ZÀ-ÿ]{2,12}#[0-9]{1,10})" 
                [(ngModel)]="data" 
                type="search" 
-               autocomplete="on" 
+               autocomplete="off" 
                (keyup)="onKey($event, myform)" 
                placeholder="Enter Battletag"
-               name="battletag">
+               name="battletag"
+               autofocus>
       </div>
       <div class="col-4 col-md-2">
         <button type="button" 
@@ -149,7 +150,10 @@
               </th>
               <td>{{hero.eliminationsPerLife.toFixed(2)}}</td>
               <td>{{hero.weaponAccuracy}}%</td>
-              <td *ngIf="currentMode === 'competitive'" class="d-none d-sm-table-cell">{{hero.winPercentage}}%</td>
+              <td *ngIf="currentMode === 'competitive'"
+                   class="d-none d-sm-table-cell"
+                   [style.color]="hero.winPercentage > 49.99 ?'lawngreen':'#ff6464'"
+                   >{{hero.winPercentage}}%</td>
               <td *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">{{hero.gamesWon}}</td>
               <td *ngIf="currentMode !== 'competitive'" >{{hero.timePlayed}}</td>
               <td *ngIf="currentMode === 'competitive'">{{hero.games}}</td>

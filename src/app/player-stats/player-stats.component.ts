@@ -28,7 +28,6 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   opacity = 0;
   zIndex = 0;
   visible = false;
-
   pos = 0;
   players = [
     'gorgoyle#1281',
