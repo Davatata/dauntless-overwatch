@@ -78,6 +78,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.searching = false;
     }).catch(error => {
       this.filteredList = [];
+      this.removeBadSearch(this.temp);
       this.temp = ''; 
       this.loading = false;
       this.badQuery = true;
@@ -85,15 +86,23 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeBadSearch(tempBattleTag) {
+    let pos = this.searches.indexOf(tempBattleTag);
+    if (pos !== -1) {
+      this.searches.splice(pos,1);
+      this.http.setSearches(this.searches);
+    }   
+  }
+
   addSearch(battleTag) {
-    if(this.searches.indexOf(battleTag) === -1) {
+    if (this.searches.indexOf(battleTag) === -1) {
       this.searches.push(this.battleTag);
     }    
   }
 
   // submit query when entered pressed from input
   onKey(event: any, form: NgForm) {
-    if(event.keyCode === 13 && form.form.valid) {
+    if (event.keyCode === 13 && form.form.valid) {
       this.getData();
     } else {
       if (this.data !== ""){
