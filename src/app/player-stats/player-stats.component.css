@@ -26,7 +26,7 @@ li:hover {
   padding: 0;
   position: absolute;
   height:200px;
-  overflow: scroll;
+  overflow-y: scroll;
   z-index: 1000;
   background-color: white;
   margin-top: -25px;
