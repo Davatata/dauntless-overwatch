@@ -103,7 +103,7 @@
               <th>K/D</th>
               <th class="d-none d-sm-table-cell">Accuracy</th>
               <th *ngIf="currentMode === 'competitive'">Win%</th>
-              <th *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">Wins</th>
+              <th *ngIf="currentMode !== 'competitive'">Wins</th>
               <th *ngIf="currentMode !== 'competitive'">Played</th>
               <th *ngIf="currentMode === 'competitive'">Games</th>
             </tr>
@@ -118,8 +118,8 @@
               <td *ngIf="currentMode === 'competitive'"
                    [style.color]="hero.winPercentage > 49.99 ?'lawngreen':'#ff6464'"
                    >{{hero.winPercentage}}%</td>
-              <td *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">{{hero.gamesWon}}</td>
-              <td *ngIf="currentMode !== 'competitive'" >{{hero.timePlayed}}</td>
+              <td *ngIf="currentMode !== 'competitive'">{{hero.gamesWon}}</td>
+              <td *ngIf="currentMode !== 'competitive'">{{hero.timePlayed}}</td>
               <td *ngIf="currentMode === 'competitive'">{{hero.games}}</td>
             </tr>
           </tbody>
