@@ -31,7 +31,7 @@
         <div class="suggestions">
             <ul id="suggestedTags">
               <a *ngFor="let item of filteredList" (click)="select(item); filteredList = [];" >
-                <li style="padding: 8px 0 8px 10px; cursor: pointer;"
+                <li style="padding: 8px 10px; cursor: pointer;"
                     class="border" >{{item}}
                 </li>
               </a>
@@ -46,41 +46,6 @@
 <hr>
 
 <div *ngIf="goodQuery" class="container" style="max-width:767px">
-  <!-- <div class="row" style="background-color:black; color:white;">
-      <div class="col-3" style="padding:0; max-width:100px;">
-        <img src="{{playerInfo.icon}}" alt="-" 
-             style="width:100px; height:100px;"
-             onError="this.src='../../assets/logo.png';"></div>
-      <div class="col d-sm-none text-center">
-        <h5 style="padding-top:15px;">{{temp}}</h5>
-        <h5>Level: {{playerInfo.level}}</h5>
-      </div>
-      <div class="col-sm d-none d-sm-block" style="padding: 15px; text-align: center; font-size: 2em;">
-        <span style="padding-top:30px;">{{temp}}</span>
-        <span style="margin-left:20px;">Level: {{playerInfo.level}}</span>
-      </div>
-      
-  </div> -->
-
-  <!-- <div class="row justify-content-center" style="background-color:black; text-align:center; color:white;">
-    <div class="col">
-      <p style="padding: 2px 0;">
-        <img src="{{playerInfo.ratingIcon}}" alt="-" 
-            style="width:50px; height:50px;"
-            onError="this.src='../../assets/logo.png';">{{playerInfo.rating}}</p>
-      <p>Skill Rating</p>
-    </div>
-    <div class="col">
-      <p style="padding: 15px 0;">{{playerInfo.compGames.wins}}-{{playerInfo.compGames.losses}}-{{playerInfo.compGames.ties}}</p>
-      <p>WIN/LOSS/TIE</p>
-    </div>
-    <div class="col">
-      <p 
-        style="padding: 15px 0;"
-        [style.color]="playerInfo.compGames.winRate > 49.99 ?'lawngreen':'#ff6464'">{{playerInfo.compGames.winRate}}%</p>
-      <p>Win Rate</p>
-    </div>
-  </div> -->
   <div class="row justify-center">
     <table class="table table-bordered table-dark m-0">
       <thead>
@@ -89,7 +54,7 @@
             <img src="{{playerInfo.icon}}" alt="-" 
             style="width:75px; height:75px;"
             onError="this.src='../../assets/logo.png';"></th>
-          <th scope="col">{{temp}}</th>
+          <th scope="col" class="toggleName">{{temp}}</th>
           <th scope="col">Level: {{playerInfo.level}}</th>
         </tr>
       </thead>
@@ -136,10 +101,10 @@
             <tr>
               <th></th>
               <th>K/D</th>
-              <th>Accuracy</th>
-              <th *ngIf="currentMode === 'competitive'" class="d-none d-sm-table-cell">Win%</th>
+              <th class="d-none d-sm-table-cell">Accuracy</th>
+              <th *ngIf="currentMode === 'competitive'">Win%</th>
               <th *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">Wins</th>
-              <th *ngIf="currentMode !== 'competitive'" >Played</th>
+              <th *ngIf="currentMode !== 'competitive'">Played</th>
               <th *ngIf="currentMode === 'competitive'">Games</th>
             </tr>
             <tr *ngFor="let hero of hasTimePlayed(topHeroes[currentMode])">
@@ -149,9 +114,8 @@
                      onerror="this.src='../../assets/logo.png';">
               </th>
               <td>{{hero.eliminationsPerLife.toFixed(2)}}</td>
-              <td>{{hero.weaponAccuracy}}%</td>
+              <td class="d-none d-sm-table-cell">{{hero.weaponAccuracy}}%</td>
               <td *ngIf="currentMode === 'competitive'"
-                   class="d-none d-sm-table-cell"
                    [style.color]="hero.winPercentage > 49.99 ?'lawngreen':'#ff6464'"
                    >{{hero.winPercentage}}%</td>
               <td *ngIf="currentMode !== 'competitive'" class="d-none d-sm-table-cell">{{hero.gamesWon}}</td>
