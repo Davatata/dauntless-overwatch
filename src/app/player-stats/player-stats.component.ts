@@ -217,7 +217,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     } else {
       this.visible = !this.visible;
       // add listener to disable scroll
-      window.addEventListener('scroll', this.noscroll);
+      // window.addEventListener('scroll', this.noscroll);
       this.opacity = 1;
       this.zIndex = 1050;
     }
