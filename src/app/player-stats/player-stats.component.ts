@@ -26,7 +26,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   currentMode = 'competitive';
   topHeroes:Object[] = [];
   opacity = 0;
-  zIndex = 0;
+  zIndex = -1;
   visible = false;
   pos = 0;
   players = [
@@ -213,7 +213,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       // Remove listener to disable scroll
       window.removeEventListener('scroll', this.noscroll);
       this.opacity = 0;
-      this.zIndex = 0;
+      this.zIndex = -1;
     } else {
       this.visible = !this.visible;
       // add listener to disable scroll

@@ -25,11 +25,12 @@ li:hover {
   list-style: none;
   padding: 0;
   position: absolute;
-  max-height:200px;
+  max-height: 35vh;
+  min-width: 200px;
   overflow-y: auto;
   z-index: 1000;
   background-color: white;
-  margin-top: -25px;
+  margin-top: -40px;
 }
 
 .table td, .table th {

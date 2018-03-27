@@ -29,7 +29,7 @@ export class InfoComponent implements OnInit {
 
   hideRanks() {
     this.opacity = 0;
-    this.zIndex = 0;
+    this.zIndex = -1;
     this.hide.emit(null);
   }
 }

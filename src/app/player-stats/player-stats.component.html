@@ -8,15 +8,23 @@
   <form #myform="ngForm">
     <div class="row justify-content-center">
       <div class="col-8 col-md-6">
-        <input class="form-control" 
-               pattern="([a-zA-ZÀ-ÿ]{1}[0-9a-zA-ZÀ-ÿ]{2,12}#[0-9]{1,10})" 
-               [(ngModel)]="data" 
-               type="search" 
-               autocomplete="off" 
-               (keyup)="onKey($event, myform)" 
-               placeholder="Enter Battletag"
-               name="battletag"
-               autofocus>
+        <div class="input-group mb-3">
+          <input id="battletag-input"
+                 class="form-control" 
+                 pattern="([a-zA-ZÀ-ÿ]{1}[0-9a-zA-ZÀ-ÿ]{2,12}#[0-9]{1,10})" 
+                 [(ngModel)]="data" 
+                 type="search" 
+                 autocomplete="off" 
+                 (keyup)="onKey($event, myform)" 
+                 placeholder="Enter a battletag (case sensitive)"
+                 name="battletag"
+                 autofocus>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" 
+                    type="button"
+                    (click)="data=''">X</button>
+          </div>
+        </div>
       </div>
       <div class="col-4 col-md-2">
         <button type="button" 
