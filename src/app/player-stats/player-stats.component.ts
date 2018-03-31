@@ -228,6 +228,11 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     window.scrollTo( 0, 0 );
   }
 
+  resetSuggestions() {
+    this.data=''; 
+    this.filteredList = []; 
+  }
+
   ngOnDestroy() {
     this.http.setSearches(this.searches);
   }
