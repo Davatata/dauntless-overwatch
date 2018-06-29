@@ -138,7 +138,7 @@
 </div>
 
 <div *ngIf="badQuery" class=" col-md-6 offset-md-3 alert alert-danger alert-dismissible" role="alert">
-  Enter a valid Battletag. (Caps matter)
+  Error: {{errorString}}
   <button type="button" class="close" data-dismiss="alert" (click)="badQuery = false;" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

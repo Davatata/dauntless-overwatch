@@ -38,6 +38,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     // 'NeilBeanz#1405',
     'metaphysics#11256'
   ];
+  errorString:string;
 
   constructor(private http: HttpServiceService) {}
 
@@ -51,6 +52,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
 
   // use input field to get data
   getData() {
+    this.errorString = "";
     this.searching = true;
     this.temp = this.data;
     this.data = '';
@@ -60,6 +62,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     this.currentMode = 'competitive';
     let promise = this.http.getStats(this.temp).then(data => {
       if(data === undefined || data['error']) {
+        this.errorString = "couldn't find profile.";
         throw Error('Bad get');
       }
       this.filteredList = [];
@@ -77,6 +80,10 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
       this.compActive = true;
       this.searching = false;
     }).catch(error => {
+      if (this.errorString === "") {
+        this.errorString = "profile might be private.";
+      }
+      console.error(error);
       this.filteredList = [];
       this.removeBadSearch(this.temp);
       this.temp = ''; 
