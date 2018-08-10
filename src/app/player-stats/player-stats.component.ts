@@ -39,6 +39,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     'metaphysics#11256'
   ];
   errorString:string;
+  // urlBattletag:string;
 
   constructor(private http: HttpServiceService) {}
 
@@ -48,6 +49,16 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     if (s !== null) {
       this.searches = s.split(',');
     }
+    let urlBattletag = this.getParam('battletag')
+    if (urlBattletag) {
+      this.data = urlBattletag.split('-').join('#');
+      this.getData();
+    }
+  }
+
+  // grabbed from https://stackoverflow.com/a/43378874/3602679
+  getParam(param){
+    return new URLSearchParams(window.location.search).get(param);
   }
 
   // use input field to get data
