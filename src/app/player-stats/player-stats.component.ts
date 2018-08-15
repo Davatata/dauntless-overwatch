@@ -252,6 +252,24 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     this.filteredList = []; 
   }
 
+  getRankTitle(srAmount) {
+    if (srAmount < 1500) {
+      return 'Bronze';
+    } else if (srAmount < 2000) {
+      return 'Silver';
+    } else if (srAmount < 2500) {
+      return 'Gold';
+    } else if (srAmount < 3000) {
+      return 'Platinum';
+    } else if (srAmount < 3500) {
+      return 'Diamond';
+    } else if (srAmount < 4000) {
+      return 'Master';
+    } else if (srAmount > 4000) {
+      return 'Grand Master';
+    }
+  }
+
   ngOnDestroy() {
     this.http.setSearches(this.searches);
   }
