@@ -48,3 +48,29 @@ li:hover {
 p:nth-child(2) {
   padding-bottom: 15px;
 }
+
+.logo {
+  height: 150px;
+  width: 150px;
+  margin: auto;
+  display: block;
+  position: relative;
+  animation-name: rotateImage;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;  
+}
+
+@keyframes rotateImage {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
