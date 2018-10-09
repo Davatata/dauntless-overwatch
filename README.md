@@ -8,7 +8,7 @@ I decided to practice REST calls by making this page which takes an Overwatch ba
 ## Inputs
 Submission requires an existing (case sensitive) battletag.
 
-Example input: Shauntdh#1451
+Example input: Honeybunz#11553
 
 ## Tools
 Angular as front-end framework.
