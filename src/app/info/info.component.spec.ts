@@ -22,4 +22,18 @@ describe('InfoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit event on close', () => {
+    component.hide.subscribe(e => {
+      expect(e).toEqual(null);
+    });
+  });
+
+  it('should reset opacity/zIndex', () => {
+    expect(component.opacity).toEqual(undefined);
+    expect(component.zIndex).toEqual(undefined);
+    component.hideRanks();
+    expect(component.opacity).toEqual(0);
+    expect(component.zIndex).toEqual(-1);
+  });
 });

@@ -10,10 +10,10 @@ import { HttpServiceService } from '../http-service.service';
 })
 export class PlayerStatsComponent implements OnInit, OnDestroy {
   title = 'Dauntless Overwatch';
-  data:string = '';
-  temp:string = '';
-  battleTag:string = '';
-  playerInfo = {};
+  data = '';
+  temp = '';
+  battleTag = '';
+  playerInfo: any = {};
   goodQuery = false;
   badQuery = false;
   searches = [];
@@ -24,7 +24,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   compActive = true;
   searching = false;
   currentMode = 'competitive';
-  topHeroes:Object[] = [];
+  topHeroes: Object[] = [];
   opacity = 0;
   zIndex = -1;
   visible = false;
@@ -38,19 +38,19 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     // 'NeilBeanz#1405',
     'metaphysics#11256'
   ];
-  errorString:string;
-  urlParams:any;
-  urlBattletag:string;
+  errorString: string;
+  urlParams: any;
+  urlBattletag: string;
 
   constructor(private http: HttpServiceService) {}
 
   ngOnInit() {
-    let s = this.http.getSearches();
+    const s = this.http.getSearches();
     // console.log(`s is ${s}`);
     if (s !== null) {
       this.searches = s.split(',');
     }
-    this.urlBattletag = this.getParam('battletag')
+    this.urlBattletag = this.getParam('battletag');
     if (this.urlBattletag) {
       this.data = this.urlBattletag.split('-').join('#');
       this.getData();
@@ -58,14 +58,14 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   // grabbed from https://stackoverflow.com/a/43378874/3602679
-  getParam(param){
+  getParam(param) {
     this.urlParams = new URLSearchParams(window.location.search);
     return this.urlParams.get(param);
   }
 
   // use input field to get data
   getData() {
-    this.errorString = "";
+    this.errorString = '';
     this.searching = true;
     this.temp = this.data;
     this.data = '';
@@ -73,32 +73,34 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     this.goodQuery = false;
     this.badQuery = false;
     this.currentMode = 'competitive';
-    let promise = this.http.getStats(this.temp).then(data => {
-      if(data === undefined || data['error']) {
-        this.errorString = "couldn't find profile."
+    this.http.getStats(this.temp).then(data => {
+      if (data === undefined || data['error']) {
+        this.errorString = 'couldn\'t find profile.';
         throw Error('Bad get');
       }
+      // console.table(data);
+      // console.log('passed the data check');
       this.filteredList = [];
       this.battleTag = this.temp;
-      this.addSearch(this.battleTag);      
+      this.addSearch(this.battleTag);
       this.http.setSearches(this.searches);
       // console.log(data);
       this.topHeroes = [];
       this.playerInfo = this.getOverallInfo(data);
-      // console.log(this.playerInfo);
+      // console.log('passed getOverallinfo');
       this.topHeroes[this.currentMode] = this.getTopHeroes(this.playerInfo);
-      //console.table(this.topHeroes);
+      // console.table(this.topHeroes);
       this.goodQuery = true;
       this.loading = false;
       this.compActive = true;
       this.searching = false;
     }).catch(error => {
-      if (this.errorString === "") {
-        this.errorString = "profile might be private."
+      if (this.errorString === '') {
+        this.errorString = 'profile might be private.';
       }
       this.filteredList = [];
       this.removeBadSearch(this.temp);
-      this.temp = ''; 
+      this.temp = '';
       this.loading = false;
       this.badQuery = true;
       this.searching = false;
@@ -106,17 +108,18 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   removeBadSearch(tempBattleTag) {
-    let pos = this.searches.indexOf(tempBattleTag);
+    const pos = this.searches.indexOf(tempBattleTag);
     if (pos !== -1) {
-      this.searches.splice(pos,1);
+      this.searches.splice(pos, 1);
       this.http.setSearches(this.searches);
-    }   
+    }
   }
 
   addSearch(battleTag) {
     if (this.searches.indexOf(battleTag) === -1) {
+      // console.log('adding battletag to searches');
       this.searches.push(this.battleTag);
-    }    
+    }
   }
 
   // submit query when entered pressed from input
@@ -124,11 +127,11 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     if (event.keyCode === 13 && form.form.valid) {
       this.getData();
     } else {
-      if (this.data !== ""){
+      if (this.data !== '') {
         this.filteredList = this.searches.filter(el => {
-            return el.toLowerCase().includes(this.data.toLowerCase());   
+            return el.toLowerCase().includes(this.data.toLowerCase());
         });
-      } else{
+      } else {
           this.filteredList = [];
       }
     }
@@ -140,7 +143,7 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
 
   hasTimePlayed(arr) {
     return arr.filter(hero => {
-      return hero.timePlayed !== "--";
+      return hero.timePlayed !== '--';
     });
   }
 
@@ -159,12 +162,12 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   getOverallInfo(data) {
-    let careerStats = data.competitiveStats.careerStats;
-    let compStats = careerStats.allHeroes;
-    let played = compStats.game.gamesPlayed === undefined ? 0 : compStats.game.gamesPlayed;
-    let wins =   compStats.game.gamesWon    === undefined ? 0 : compStats.game.gamesWon;
-    let ties =   compStats.game.gamesTied   === undefined ? 0 : compStats.game.gamesTied;
-    let lost =   played - wins - ties;
+    const careerStats = data.competitiveStats.careerStats;
+    const compStats = careerStats.allHeroes;
+    const played = compStats.game.gamesPlayed === undefined ? 0 : compStats.game.gamesPlayed;
+    const wins =   compStats.game.gamesWon    === undefined ? 0 : compStats.game.gamesWon;
+    const ties =   compStats.game.gamesTied   === undefined ? 0 : compStats.game.gamesTied;
+    const lost =   played - wins - ties;
 
     return {
       icon: data.icon,
@@ -184,15 +187,16 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   getTopHeroes(playerInfo) {
-    let temp = playerInfo[this.currentMode]['topHeroes'];
-    let heroes = Object.keys(temp).map(heroName => {
-      let ar = temp[heroName];
-      ar.seconds = this.convertTime(ar.timePlayed);
-      ar.hero = heroName.toUpperCase();
+    const temp = playerInfo[this.currentMode]['topHeroes'];
+    // console.table(temp);
+    const heroes = Object.keys(temp).map(heroName => {
+      const heroData = temp[heroName];
+      heroData.seconds = this.convertTime(heroData.timePlayed);
+      heroData.hero = heroName.toUpperCase();
       if (playerInfo['careerStats'][heroName]) {
-        ar.games = this.getWTL(playerInfo['careerStats'][heroName]['game']);
+        heroData.games = this.getWTL(playerInfo['careerStats'][heroName]['game']);
       }
-      return ar;
+      return heroData;
     });
     heroes.sort(function (a, b) {
       return b.seconds - a.seconds;
@@ -200,30 +204,33 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
     return heroes;
   }
 
-  convertTime(time:string) {
+  convertTime(time: string) {
     if (time === '--') {
       return 0;
     }
-
-    let arr:any = time.split(' ');
-    arr[0] = parseInt(arr[0]); // "2" => 2
-    if (arr[1].startsWith('second')) {
-      return arr[0];
-    } else {
-      let seconds = (arr[1].startsWith('minute') ? 60 : 3600);
-      return arr[0] * seconds;
+    const arr: any = time.split(':');
+    if (arr.length === 2) {
+      arr[2] = arr[1];
+      arr[1] = arr[0];
+      arr[0] = '0';
     }
+    arr.map(x => parseInt(x, 10));
+
+    arr[0] *= 3600;
+    arr[1] *= 60;
+
+    return arr[0] + arr[1] + arr[2];
   }
 
-  getWTL(games:Object) {
-    let totalPlayed = games['gamesPlayed'] || 0;
-    let ties = games['gamesTied'] || 0;
-    let wins = games['gamesWon'] || 0;
-    let losses = totalPlayed - wins - ties;
+  getWTL(games: Object) {
+    const totalPlayed = games['gamesPlayed'] || 0;
+    const ties = games['gamesTied'] || 0;
+    const wins = games['gamesWon'] || 0;
+    const losses = totalPlayed - wins - ties;
     if (ties) {
-      return `${wins}-${losses}-${ties}`; 
+      return `${wins}-${losses}-${ties}`;
     }
-    return `${wins}-${losses}`; 
+    return `${wins}-${losses}`;
   }
 
   toggleRanks() {
@@ -248,8 +255,8 @@ export class PlayerStatsComponent implements OnInit, OnDestroy {
   }
 
   resetSuggestions() {
-    this.data=''; 
-    this.filteredList = []; 
+    this.data = '';
+    this.filteredList = [];
   }
 
   getRankTitle(srAmount) {

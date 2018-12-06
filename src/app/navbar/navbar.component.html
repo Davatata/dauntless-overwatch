@@ -1,14 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">DO</a>
-    <button class="navbar-toggler" type="button" (click)="toggleOpen()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div *ngIf="isOpen" class="navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#" (click)="toggleOpen()">Home <span class="sr-only">(current)</span></a>
-        <!-- <a class="nav-item nav-link" href="#" (click)="toggleOpen()">Features</a> -->
-        <!-- <a class="nav-item nav-link" href="#" (click)="toggleOpen()">Pricing</a> -->
-      </div>
+  <a class="navbar-brand" href="#">DO</a>
+  <button class="navbar-toggler" type="button" (click)="toggleOpen()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div *ngIf="isOpen" class="navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#" (click)="toggleOpen()">Home <span class="sr-only">(current)</span></a>
     </div>
-  </nav>
-  
+  </div>
+</nav>

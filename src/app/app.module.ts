@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HttpServiceService } from "./http-service.service";
+import { HttpServiceService } from './http-service.service';
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { InfoComponent } from './info/info.component';
 
@@ -20,7 +20,8 @@ import { InfoComponent } from './info/info.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [HttpServiceService],
   bootstrap: [AppComponent]

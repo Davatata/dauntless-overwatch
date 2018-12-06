@@ -22,4 +22,15 @@ describe('NavbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set isOpen to false initially', () => {
+    expect(component.isOpen).toEqual(false);
+  });
+
+  it('should toggle isOpen', () => {
+    component.toggleOpen();
+    expect(component.isOpen).toEqual(true);
+    component.toggleOpen();
+    expect(component.isOpen).toEqual(false);
+  });
 });

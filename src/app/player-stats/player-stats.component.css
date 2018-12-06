@@ -50,15 +50,15 @@ p:nth-child(2) {
 }
 
 .logo {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   margin: auto;
   display: block;
   position: relative;
   animation-name: rotateImage;
   animation-duration: 2s;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;  
+  animation-iteration-count: infinite;
 }
 
 @keyframes rotateImage {
